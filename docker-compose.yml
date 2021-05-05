@@ -1,0 +1,28 @@
+version: "3.4"
+services:
+  servicea:
+    build:
+      context: service/.
+    expose:
+      - 4000
+    networks:
+      - default
+  serviceb:
+    build:
+      context: service/.
+    expose:
+      - 4000
+    networks:
+      - default
+  auth:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./htpasswd:/etc/nginx/htpasswd
+    ports:
+      - 80:80
+    networks:
+      - default
+networks:
+  default:
+    driver: bridge
